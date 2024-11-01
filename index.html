@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculatrice Moderne</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Styles généraux */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Conteneur principal */
+        .container {
+            width: 260px;
+            background-color: #222;
+            border-radius: 10px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bolder;
+            text-decoration: dotted;
+        }
+
+        /* Bouton retour */
+        .back-button {
+            background-color: #444;
+            color: #fff;
+            border: solid, 0px;
+            border-radius: 15px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.85s;
+        }
+
+        .back-button:hover {
+            background-color: orange;
+        }
+
+        /* Conteneur de la calculatrice */
+        .boxCalc {
+            padding: 20px;
+        }
+
+        /* Affichage */
+        .display {
+            width: 100%;
+            height: 60px;
+            background-color: #333;
+            border-radius: 5px;
+            font-size: 24px;
+            color: #fff;
+            padding: 10px;
+            text-align: right;
+            margin-bottom: 10px;
+            box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Grille de boutons */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr) 1fr;
+            gap: 10px;
+        }
+
+        /* Styles des boutons */
+        .btn-calc,
+        .operator,
+        .submit,
+        .reset {
+            width: 100%;
+            height: 60px;
+            border: none;
+            border-radius: 5px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Style des boutons numériques */
+        .btn-calc {
+            background-color: #444;
+        }
+
+        .btn-calc:hover {
+            background-color: #555;
+        }
+
+        .btn-calc:active {
+            transform: scale(0.95);
+        }
+
+        /* Style des opérateurs */
+        .operator {
+            background-color: #f9a825;
+        }
+
+        .operator:hover {
+            background-color: #ffca28;
+        }
+
+        .operator:active {
+            transform: scale(0.95);
+        }
+
+        /* Bouton égal */
+        .submit {
+            background-color: #0f9d58;
+        }
+
+        .submit:hover {
+            background-color: #1ec97b;
+        }
+
+        .submit:active {
+            transform: scale(0.95);
+        }
+
+        /* Bouton C */
+        .reset {
+            background-color: #d32f2f;
+        }
+
+        .reset:hover {
+            background-color: #e64a19;
+        }
+
+        .reset:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- En-tête avec le titre et le bouton de retour -->
+        <header>
+            <span>Ma Calculatrice</span>
+            <button class="back-button" onclick="window.location.href='index.html'">Retour</button>
+        </header>
+
+        <!-- Conteneur de la calculatrice -->
+        <div class="boxCalc">
+            <!-- Affichage du résultat -->
+            <div class="display" id="result">0</div>
+
+            <!-- Grille de boutons de la calculatrice -->
+            <div class="grid">
+                <!-- Boutons des chiffres et opérateurs -->
+                <button class="btn-calc" onclick="appendNumber('7')">7</button>
+                <button class="btn-calc" onclick="appendNumber('8')">8</button>
+                <button class="btn-calc" onclick="appendNumber('9')">9</button>
+                <button class="operator" onclick="appendOperator('/')">÷</button>
+
+                <button class="btn-calc" onclick="appendNumber('4')">4</button>
+                <button class="btn-calc" onclick="appendNumber('5')">5</button>
+                <button class="btn-calc" onclick="appendNumber('6')">6</button>
+                <button class="operator" onclick="appendOperator('*')">×</button>
+
+                <button class="btn-calc" onclick="appendNumber('1')">1</button>
+                <button class="btn-calc" onclick="appendNumber('2')">2</button>
+                <button class="btn-calc" onclick="appendNumber('3')">3</button>
+                <button class="operator" onclick="appendOperator('-')">−</button>
+
+                <button class="btn-calc" onclick="appendNumber('0')">0</button>
+                <button class="btn-calc" onclick="appendNumber('.')">.</button>
+                <button class="submit" onclick="calculate()">=</button>
+                <button class="operator" onclick="appendOperator('+')">+</button>
+
+                <!-- Bouton pour effacer l'entrée -->
+                <button class="reset" onclick="resetCalc()">C</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let display = document.getElementById('result');
+        let currentInput = '';
+
+        // Fonction pour ajouter un chiffre
+        function appendNumber(number) {
+            if (display.innerText === '0') {
+                currentInput = number;
+            } else {
+                currentInput += number;
+            }
+            display.innerText = currentInput;
+        }
+
+        // Fonction pour ajouter un opérateur
+        function appendOperator(operator) {
+            if (currentInput !== '') {
+                currentInput += ' ' + operator + ' ';
+                display.innerText = currentInput;
+            }
+        }
+
+        // Fonction pour calculer le résultat
+        function calculate() {
+            try {
+                let result = eval(currentInput.replace('×', '*').replace('÷', '/'));
+                display.innerText = result;
+                currentInput = result.toString();
+            } catch (error) {
+                display.innerText = 'Erreur';
+                currentInput = '';
+            }
+        }
+
+        // Fonction pour réinitialiser la calculatrice
+        function resetCalc() {
+            currentInput = '';
+            display.innerText = '0';
+        }
+
+        // Gestion des entrées clavier
+        document.addEventListener('keydown', (event) => {
+            const key = event.key;
+            if (!isNaN(key)) {
+                appendNumber(key);
+            } else if (['+', '-', '*', '/'].includes(key)) {
+                appendOperator(key);
+            } else if (key === 'Enter') {
+                calculate();
+            } else if (key === 'Escape' || key === 'c') {
+                resetCalc();
+            } else if (key === 'Backspace') {
+                // Enlever le dernier caractère de l'entrée
+                currentInput = currentInput.slice(0, -1);
+                display.innerText = currentInput || '0';
+            }
+        });
+    </script>
+
+</body>
+
+</html>

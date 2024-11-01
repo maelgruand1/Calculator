@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --ColorBack: linear-gradient(to right, red, yellow, orange);
+    --headerBackColor: black;
+    --borderRad: 20px;
+    --borderStyle: solid, 0px;
+    --alignCenter: center;
+    --underlineText: underline;
+    --fontMontserrat: 'Montserrat', serif;
+    --borderAside: dotted, 5px;
+
+}
+
+* {
+    margin: 0.15rem;
+
+}
+
+header.title {
+    color: red;
+    background-color: var(--headerBackColor);
+    padding: 15px;
+    border: var(--borderStyle);
+    border-radius: var(--borderRad);
+    position: relative;
+    top: -30rem;
+    text-align: center;
+
+}
+
+h1.title {
+    text-align: var(--alignCenter);
+
+}
+
+body {
+    background-image: var(--ColorBack);
+}
+
+.title:hover {
+    color: white;
+    text-decoration: var(--underlineText);
+}
+
+p.txt {
+    color: black;
+    text-align: justify;
+    font-size: large;
+}
+
+aside {
+    background-color: aqua;
+    border: var(--borderAside);
+    border-radius: var(--borderRad);
+    padding: 10px;
+    text-align: center;
+}
